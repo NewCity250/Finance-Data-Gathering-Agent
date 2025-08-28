@@ -1,0 +1,24 @@
+name: finance-agent
+on:
+  schedule: [{ cron: "0 13 * * 1-5" }]  # Weekdays 9:00 ET
+  workflow_dispatch: {}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Run agent
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: python -m agent.run
+      - name: Commit outputs
+        run: |
+          git config user.name "agent-bot"
+          git config user.email "agent-bot@example.com"
+          git add -A
+          git commit -m "Update data" || echo "No changes"
+          git push
