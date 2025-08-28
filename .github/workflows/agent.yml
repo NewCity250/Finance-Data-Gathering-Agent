@@ -1,4 +1,6 @@
 name: finance-agent
+permissions:
+  contents: write
 on:
   schedule: [{ cron: "0 13 * * 1-5" }]  # Weekdays 9:00 ET
   workflow_dispatch: {}
