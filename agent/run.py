@@ -20,7 +20,7 @@ def run_for_ticker(tkr):
     df = extract_usgaap_facts(facts, USGAAP_TAGS)
     df.to_csv(f"data/{tkr}_facts.csv", index=False)
 
-    px = stooq_prices(tkr)
+    px = stooq_prices(tkr, start="2000-01-01")
     px.to_csv(f"data/{tkr}_prices.csv", index=False)
 
     print(f"Saved: data/{tkr}_facts.csv, data/{tkr}_prices.csv")
